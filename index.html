@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marie la vie · Pizzaria & Loja</title>
+    <!-- Fonte incrível e ícones -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #fdf8f2;
+            color: #2e241f;
+            line-height: 1.5;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        /* HEADER */
+        header {
+            background: #1e2b1f; /* verde escuro elegante */
+            color: #f7f1e5;
+            padding: 1.2rem 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 4px solid #c49a6c;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo i {
+            font-size: 2.2rem;
+            color: #d9b382;
+        }
+
+        .logo h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #f7e7ce;
+            text-shadow: 2px 2px 0 #0f130f;
+        }
+
+        .logo span {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 300;
+            font-size: 0.9rem;
+            display: block;
+            color: #cbb28b;
+            letter-spacing: 3px;
+            margin-top: -5px;
+        }
+
+        .cart-icon {
+            background: #c49a6c;
+            color: #1e2b1f;
+            padding: 0.8rem 1.3rem;
+            border-radius: 40px;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: 0.2s;
+            border: none;
+            box-shadow: 0 4px 0 #7a5c3a;
+        }
+
+        .cart-icon:hover {
+            background: #dbb78b;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 #7a5c3a;
+        }
+
+        .cart-icon i {
+            font-size: 1.3rem;
+        }
+
+        #cart-count {
+            background: #1e2b1f;
+            color: #f7e7ce;
+            border-radius: 50%;
+            width: 26px;
+            height: 26px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            margin-left: 5px;
+        }
+
+        /* HERO */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            padding: 4rem 2rem;
+            text-align: center;
+            color: #fff8ed;
+        }
+
+        .hero h2 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            text-shadow: 3px 3px 0 #1e2b1f;
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            font-weight: 300;
+            max-width: 700px;
+            margin: 0 auto;
+            background: rgba(30,43,31,0.7);
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            display: inline-block;
+            backdrop-filter: blur(2px);
+        }
+
+        /* CONTAINER */
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 2.5rem 2rem;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            font-family: 'Playfair Display', serif;
+            border-left: 10px solid #c49a6c;
+            padding-left: 1.2rem;
+            margin-bottom: 2rem;
+            color: #1e2b1f;
+        }
+
+        /* GRID CARDÁPIO */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .pizza-card {
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+            transition: 0.25s ease;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #f0e1d0;
+        }
+
+        .pizza-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 30px rgba(30,43,31,0.2);
+            border-color: #c49a6c;
+        }
+
+        .pizza-img {
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .pizza-tag {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: #1e2b1f;
+            color: #f7e7ce;
+            padding: 0.3rem 1rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .pizza-info {
+            padding: 1.2rem 1.2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .pizza-info h3 {
+            font-size: 1.5rem;
+            color: #1e2b1f;
+            margin-bottom: 0.3rem;
+            line-height: 1.2;
+        }
+
+        .pizza-desc {
+            font-size: 0.85rem;
+            color: #5e4b3c;
+            margin-bottom: 1rem;
+            flex: 1;
+            font-weight: 300;
+        }
+
+        .pizza-price {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #c49a6c;
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 1rem;
+        }
+
+        .pizza-price small {
+            font-size: 0.9rem;
+            font-weight: 300;
+            color: #8a7461;
+        }
+
+        .btn-add {
+            background: #1e2b1f;
+            color: #f7e7ce;
+            border: none;
+            padding: 0.9rem 1rem;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            border: 1px solid #1e2b1f;
+        }
+
+        .btn-add:hover {
+            background: #c49a6c;
+            color: #1e2b1f;
+            border-color: #1e2b1f;
+        }
+
+        .btn-add i {
+            font-size: 1rem;
+        }
+
+        /* CARRINHO LATERAL / MODAL */
+        .cart-modal {
+            position: fixed;
+            top: 0;
+            right: -450px;
+            width: 100%;
+            max-width: 420px;
+            height: 100vh;
+            background: #fdf8f2;
+            box-shadow: -10px 0 30px rgba(0,0,0,0.2);
+            z-index: 200;
+            transition: right 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            padding: 1.8rem 1.5rem;
+            overflow-y: auto;
+            border-left: 6px solid #c49a6c;
+        }
+
+        .cart-modal.open {
+            right: 0;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #e6d8c9;
+            padding-bottom: 1rem;
+        }
+
+        .cart-header h3 {
+            font-size: 1.9rem;
+            color: #1e2b1f;
+        }
+
+        .close-cart {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #1e2b1f;
+            line-height: 1;
+            transition: 0.2s;
+        }
+
+        .close-cart:hover {
+            color: #c49a6c;
+            transform: scale(1.1);
+        }
+
+        .cart-items {
+            flex: 1;
+            margin-bottom: 1.5rem;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px dashed #dacbbc;
+        }
+
+        .cart-item-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-item-name {
+            font-weight: 600;
+            font-size: 1.05rem;
+            color: #1e2b1f;
+        }
+
+        .cart-item-price {
+            font-size: 0.9rem;
+            color: #c49a6c;
+            font-weight: 600;
+        }
+
+        .cart-item-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .cart-item-actions button {
+            background: #f0e1d0;
+            border: none;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            color: #1e2b1f;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cart-item-actions button:hover {
+            background: #c49a6c;
+            color: white;
+        }
+
+        .cart-item-qty {
+            font-weight: 600;
+            min-width: 22px;
+            text-align: center;
+        }
+
+        .empty-cart {
+            text-align: center;
+            color: #8a7461;
+            padding: 2rem 1rem;
+            font-style: italic;
+        }
+
+        .cart-total {
+            font-size: 1.6rem;
+            font-weight: 700;
+            font-family: 'Playfair Display', serif;
+            color: #1e2b1f;
+            display: flex;
+            justify-content: space-between;
+            border-top: 2px solid #e6d8c9;
+            padding-top: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-checkout {
+            background: #c49a6c;
+            color: #1e2b1f;
+            border: none;
+            padding: 1.2rem;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 6px 0 #7a5c3a;
+            margin-bottom: 0.5rem;
+            width: 100%;
+        }
+
+        .btn-checkout:hover {
+            background: #dbb78b;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 0 #7a5c3a;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.4);
+            z-index: 150;
+            display: none;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
+        /* FOOTER */
+        footer {
+            background: #1e2b1f;
+            color: #cbb28b;
+            padding: 2.5rem 2rem 1.5rem;
+            text-align: center;
+            margin-top: 3rem;
+            border-top: 6px solid #c49a6c;
+        }
+
+        footer .logo-footer {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: #f7e7ce;
+            margin-bottom: 0.5rem;
+            letter-spacing: 3px;
+        }
+
+        footer p {
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+            font-weight: 300;
+        }
+
+        footer i {
+            color: #c49a6c;
+            margin: 0 5px;
+        }
+
+        /* RESPONSIVO */
+        @media (max-width: 600px) {
+            header {
+                padding: 0.8rem 1rem;
+            }
+            .logo h1 {
+                font-size: 1.4rem;
+            }
+            .hero h2 {
+                font-size: 2.2rem;
+            }
+            .hero p {
+                font-size: 1rem;
+                padding: 0.6rem 1rem;
+            }
+            .container {
+                padding: 1.5rem 1rem;
+            }
+            .section-title {
+                font-size: 1.8rem;
+            }
+            .cart-modal {
+                max-width: 100%;
+            }
+            .cart-icon {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="logo">
+            <i class="fas fa-pizza-slice"></i>
+            <div>
+                <h1>Marie la vie</h1>
+                <span>PIZZARIA & LOJA</span>
+            </div>
+        </div>
+        <button class="cart-icon" id="cartBtn">
+            <i class="fas fa-shopping-bag"></i>
+            <span id="cart-count">0</span>
+        </button>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+        <h2>Marie la vie</h2>
+        <p><i class="fas fa-leaf"></i> Sabores artesanais, ingredientes frescos e aquele toque francês.</p>
+    </section>
+
+    <!-- CARDÁPIO -->
+    <div class="container">
+        <h2 class="section-title"><i class="fas fa-utensils" style="color: #c49a6c; margin-right: 12px;"></i> Nosso cardápio</h2>
+        <div class="menu-grid" id="menuGrid">
+            <!-- Os cards serão injetados via JavaScript -->
+        </div>
+    </div>
+
+    <!-- CARRINHO MODAL -->
+    <div class="overlay" id="overlay"></div>
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-header">
+            <h3><i class="fas fa-shopping-basket"></i> Seu pedido</h3>
+            <button class="close-cart" id="closeCartBtn">&times;</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <!-- Itens do carrinho aparecerão aqui -->
+            <div class="empty-cart">Seu carrinho está vazio <i class="fas fa-pizza-slice"></i></div>
+        </div>
+        <div class="cart-total" id="cartTotal">
+            <span>Total</span>
+            <span id="totalPrice">R$ 0,00</span>
+        </div>
+        <button class="btn-checkout" id="checkoutBtn">
+            <i class="fab fa-whatsapp"></i> Finalizar no WhatsApp
+        </button>
+        <p style="font-size: 0.75rem; color: #7a5c3a; text-align: center; margin-top: 10px;">Pedido será enviado para (81) 98978-2301</p>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="logo-footer">Marie la vie</div>
+        <p><i class="fas fa-map-pin"></i> Rua das Flores, 123 · Recife - PE</p>
+        <p><i class="fas fa-phone-alt"></i> (81) 98978-2301 · <i class="fab fa-whatsapp"></i> WhatsApp</p>
+        <p style="margin-top: 1.2rem; font-size: 0.8rem;">© 2025 Marie la vie — Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        (function() {
+            // ==================== CARDÁPIO ====================
+            const pizzas = [
+                { id: 1, nome: "Margherita Royale", descricao: "Molho de tomate italiano, muçarela de búfala, manjericão fresco e azeite extra virgem.", preco: 58.90, tag: "Clássica", img: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?q=80&w=2069&auto=format&fit=crop" },
+                { id: 2, nome: "Calabresa Defumada", descricao: "Calabresa artesanal defumada, cebola roxa, muçarela e orégano.", preco: 54.90, tag: "Tradicional", img: "https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?q=80&w=1935&auto=format&fit=crop" },
+                { id: 3, nome: "Quatre Fromages", descricao: "Muçarela, gorgonzola, parmesão e catupiry. Um clássico francês.", preco: 69.90, tag: "Premium", img: "https://images.unsplash.com/photo-1585238342024-78d387f4a707?q=80&w=2070&auto=format&fit=crop" },
+                { id: 4, nome: "Poulet et Champignon", descricao: "Frango desfiado, champignon, catupiry e muçarela.", preco: 62.90, tag: "Especial", img: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?q=80&w=1981&auto=format&fit=crop" },
+                { id: 5, nome: "Végétarienne", descricao: "Abobrinha, berinjela, pimentão, tomate seco, rúcula e muçarela.", preco: 59.90, tag: "Vegetariana", img: "https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=2070&auto=format&fit=crop" },
+                { id: 6, nome: "Pepperoni Picante", descricao: "Pepperoni italiano, muçarela, pimenta calabresa e mel.", preco: 64.90, tag: "Picante", img: "https://images.unsplash.com/photo-1628840042765-356cda07504e?q=80&w=1780&auto=format&fit=crop" },
+                { id: 7, nome: "Saumon Fumé", descricao: "Salmão defumado, cream cheese, alcaparras e cebolinha.", preco: 89.90, tag: "Deluxe", img: "https://images.unsplash.com/photo-1600891964092-4316c288032e?q=80&w=2070&auto=format&fit=crop" },
+                { id: 8, nome: "Dolce Banana", descricao: "Banana, canela, açúcar, leite condensado e muçarela (borda doce).", preco: 49.90, tag: "Doce", img: "https://images.unsplash.com/photo-1587314168485-3236d6710814?q=80&w=1780&auto=format&fit=crop" }
+            ];
+
+            // ==================== ESTADO DO CARRINHO ====================
+            let carrinho = []; // { id, nome, preco, quantidade }
+
+            // Elementos DOM
+            const menuGrid = document.getElementById('menuGrid');
+            const cartBtn = document.getElementById('cartBtn');
+            const cartModal = document.getElementById('cartModal');
+            const closeCartBtn = document.getElementById('closeCartBtn');
+            const overlay = document.getElementById('overlay');
+            const cartItemsDiv = document.getElementById('cartItems');
+            const cartCountSpan = document.getElementById('cart-count');
+            const totalPriceSpan = document.getElementById('totalPrice');
+            const checkoutBtn = document.getElementById('checkoutBtn');
+
+            // ==================== RENDERIZAR CARDÁPIO ====================
+            function renderMenu() {
+                menuGrid.innerHTML = pizzas.map(p => `
+                    <div class="pizza-card">
+                        <div class="pizza-img" style="background-image: url('${p.img}');">
+                            <span class="pizza-tag">${p.tag}</span>
+                        </div>
+                        <div class="pizza-info">
+                            <h3>${p.nome}</h3>
+                            <p class="pizza-desc">${p.descricao}</p>
+                            <div class="pizza-price">R$ ${p.preco.toFixed(2).replace('.', ',')} <small>/ un</small></div>
+                            <button class="btn-add" data-id="${p.id}">
+                                <i class="fas fa-plus-circle"></i> Adicionar
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+
+                // Adicionar evento aos botões
+                document.querySelectorAll('.btn-add').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const id = parseInt(btn.dataset.id);
+                        adicionarAoCarrinho(id);
+                    });
+                });
+            }
+
+            // ==================== ADICIONAR ITEM ====================
+            function adicionarAoCarrinho(id) {
+                const pizza = pizzas.find(p => p.id === id);
+                if (!pizza) return;
+
+                const itemExistente = carrinho.find(item => item.id === id);
+                if (itemExistente) {
+                    itemExistente.quantidade += 1;
+                } else {
+                    carrinho.push({
+                        id: pizza.id,
+                        nome: pizza.nome,
+                        preco: pizza.preco,
+                        quantidade: 1
+                    });
+                }
+
+                atualizarCarrinho();
+                // Pequeno feedback visual
+                cartBtn.style.transform = 'scale(1.05)';
+                setTimeout(() => cartBtn.style.transform = 'scale(1)', 150);
+            }
+
+            // ==================== ATUALIZAR CARRINHO (RENDER) ====================
+            function atualizarCarrinho() {
+                // Atualiza contador
+                const totalItens = carrinho.reduce((acc, item) => acc + item.quantidade, 0);
+                cartCountSpan.textContent = totalItens;
+
+                // Renderiza itens
+                if (carrinho.length === 0) {
+                    cartItemsDiv.innerHTML = `<div class="empty-cart">Seu carrinho está vazio <i class="fas fa-pizza-slice"></i></div>`;
+                } else {
+                    cartItemsDiv.innerHTML = carrinho.map(item => `
+                        <div class="cart-item" data-id="${item.id}">
+                            <div class="cart-item-info">
+                                <span class="cart-item-name">${item.nome}</span>
+                                <span class="cart-item-price">R$ ${(item.preco * item.quantidade).toFixed(2).replace('.', ',')}</span>
+                            </div>
+                            <div class="cart-item-actions">
+                                <button class="diminuir" data-id="${item.id}">−</button>
+                                <span class="cart-item-qty">${item.quantidade}</span>
+                                <button class="aumentar" data-id="${item.id}">+</button>
+                            </div>
+                        </div>
+                    `).join('');
+                }
+
+                // Atualiza total
+                const total = carrinho.reduce((acc, item) => acc + (item.preco * item.quantidade), 0);
+                totalPriceSpan.textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+
+                // Adiciona eventos aos botões + e -
+                document.querySelectorAll('.diminuir').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const id = parseInt(btn.dataset.id);
+                        alterarQuantidade(id, -1);
+                    });
+                });
+                document.querySelectorAll('.aumentar').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const id = parseInt(btn.dataset.id);
+                        alterarQuantidade(id, 1);
+                    });
+                });
+            }
+
+            // ==================== ALTERAR QUANTIDADE ====================
+            function alterarQuantidade(id, delta) {
+                const itemIndex = carrinho.findIndex(item => item.id === id);
+                if (itemIndex === -1) return;
+
+                const item = carrinho[itemIndex];
+                const novaQtd = item.quantidade + delta;
+
+                if (novaQtd <= 0) {
+                    carrinho.splice(itemIndex, 1);
+                } else {
+                    item.quantidade = novaQtd;
+                }
+
+                atualizarCarrinho();
+            }
+
+            // ==================== ABRIR / FECHAR CARRINHO ====================
+            function abrirCarrinho() {
+                cartModal.classList.add('open');
+                overlay.classList.add('active');
+            }
+
+            function fecharCarrinho() {
+                cartModal.classList.remove('open');
+                overlay.classList.remove('active');
+            }
+
+            // ==================== FINALIZAR COMPRA (WHATSAPP) ====================
+            function finalizarCompra() {
+                if (carrinho.length === 0) {
+                    alert('Adicione pelo menos uma pizza antes de finalizar. 😊');
+                    return;
+                }
+
+                // Número do WhatsApp (formato internacional: 55 + DDD + número)
+                const telefone = '5581989782301';
+
+                // Monta a mensagem
+                let mensagem = '🍕 *Marie la vie* — Novo pedido!\n\n';
+                mensagem += '*Itens do pedido:*\n';
+
+                carrinho.forEach(item => {
+                    const subtotal = (item.preco * item.quantidade).toFixed(2).replace('.', ',');
+                    mensagem += `▪️ ${item.quantidade}x ${item.nome} — R$ ${subtotal}\n`;
+                });
+
+                const total = carrinho.reduce((acc, item) => acc + (item.preco * item.quantidade), 0);
+                mensagem += `\n*Total: R$ ${total.toFixed(2).replace('.', ',')}*\n\n`;
+                mensagem += 'Aguardo confirmação e tempo de entrega. Obrigado! ❤️';
+
+                // Codifica a mensagem para URL
+                const mensagemCodificada = encodeURIComponent(mensagem);
+
+                // Abre WhatsApp em nova aba
+                window.open(`https://wa.me/${telefone}?text=${mensagemCodificada}`, '_blank');
+
+                // Opcional: limpar carrinho após envio
+                // carrinho = [];
+                // atualizarCarrinho();
+                // fecharCarrinho();
+
+                // Mantemos o carrinho para o caso do cliente querer revisar algo
+                // Mas damos um feedback
+                alert('Pedido enviado para o WhatsApp! Confira a conversa. 😉');
+            }
+
+            // ==================== EVENTOS ====================
+            cartBtn.addEventListener('click', abrirCarrinho);
+            closeCartBtn.addEventListener('click', fecharCarrinho);
+            overlay.addEventListener('click', fecharCarrinho);
+
+            // Fechar com ESC
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && cartModal.classList.contains('open')) {
+                    fecharCarrinho();
+                }
+            });
+
+            checkoutBtn.addEventListener('click', finalizarCompra);
+
+            // ==================== INICIALIZAÇÃO ====================
+            renderMenu();
+            atualizarCarrinho(); // Inicia com carrinho vazio (contador 0)
+
+            // Expor função global para debug (opcional)
+            window.adicionarAoCarrinho = adicionarAoCarrinho;
+        })();
+    </script>
+</body>
+</html>
